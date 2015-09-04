@@ -52,3 +52,25 @@ qcom,qbt1000 {
 	qcom,ipc-gpio = <&tlmm 121 0>;
 	qcom,finger-detect-gpio = <&pm8998_gpios 2 0>;
 };
+
+   b) Sensor connected to SSC SPI port :
+   Node name - qcom,fingerprint-sensor-ssc-spi-conn
+
+   Required properties:
+   - qcom,spi-port-id : SPI port id sensor is connected to
+   - qcom,spi-port-slave-index : SPI port slave index
+   - qcom,tz-subsys-id : TZ subsystem-id for SCM calls
+   - qcom,ssc-subsys-id : SSC subsystem-id for SCM calls
+   - clock-frequency : Frequency of clock in Hz
+
+
+        qcom,qbt1000 {
+                compatible = "qcom,qbt1000";
+                qcom,fingerprint-sensor-ssc-spi-conn {
+                        qcom,spi-port-id = <13>;
+                        qcom,spi-port-slave-index = <0>;
+                        qcom,tz-subsys-id = <1>;
+                        qcom,ssc-subsys-id = <5>;
+                        clock-frequency = <15000000>;
+                };
+        };
