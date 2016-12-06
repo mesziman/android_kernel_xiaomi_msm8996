@@ -8520,14 +8520,9 @@ out:
 	fg_enable_irqs(chip, true);
 	update_sram_data_work(&chip->update_sram_data.work);
 	update_temp_data(&chip->update_temp_work.work);
-<<<<<<< HEAD
-	schedule_delayed_work(&chip->check_sanity_work,
-		msecs_to_jiffies(1000));
-=======
 	queue_delayed_work(system_power_efficient_wq,
 		&chip->check_sanity_work,
 			msecs_to_jiffies(1000));
->>>>>>> 7aed2028f496... power: qpnp-fg: queue work on system_power_efficient_wq
 	chip->ima_error_handling = false;
 	mutex_unlock(&chip->ima_recovery_lock);
 	fg_relax(&chip->fg_reset_wakeup_source);
