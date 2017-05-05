@@ -95,10 +95,7 @@ irqreturn_t hw_vsync_handler(int irq, void *data)
 	else
 		pr_err("Pstatus data is NULL\n");
 
-	if (!atomic_read(&ctrl_pdata->te_irq_ready)) {
-		complete_all(&ctrl_pdata->te_irq_comp);
-		atomic_inc(&ctrl_pdata->te_irq_ready);
-	}
+	queue_work(system_highpri_wq, &pstatus_data->irq_done);
 
 	return IRQ_HANDLED;
 }
