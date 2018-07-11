@@ -23,7 +23,7 @@
 #ifdef CONFIG_BOEFFLA_WL_BLOCKER
 #include "boeffla_wl_blocker.h"
 
-char list_wl_search[LENGTH_LIST_WL_SEARCH] = {0};
+char list_wl_search[167] = "msm_hsic_host;qbt_wake_source;qcom_rx_wakelock;wlan;wlan_wow_wl;wlan_extscan_wl;netmgr_wl;NETLINK;IPA_WS;[timerfd];wlan_ipa;wlan_pno_wl;wcnss_filter_lock;wlan_rx_wake";
 bool wl_blocker_active = false;
 bool wl_blocker_debug = false;
 

@@ -405,7 +405,7 @@ GCC8WARNINGS	= $(GCC7WARNINGS) -Wno-multistatement-macros -Wno-error=sizeof-poin
 KBUILD_CFLAGS := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		-fno-strict-aliasing -fno-common -fshort-wchar \
 		-Werror-implicit-function-declaration \
-		-Wno-format-security \
+		-Wno-format-security -Wno-incompatible-pointer-types-discards-qualifiers \
 		-std=gnu89 $(call cc-option,-fno-PIE) $(OPT_FLAGS) $(POLLY_FLAGS)
 
 KBUILD_AFLAGS_KERNEL :=
