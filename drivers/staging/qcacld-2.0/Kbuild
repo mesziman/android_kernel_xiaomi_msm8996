@@ -1467,6 +1467,8 @@ CDEFINES += -DWLAN_FEATURE_GTK_OFFLOAD
 CDEFINES += -DIGTK_OFFLOAD
 endif
 
+CDEFINES += -DWLAN_FEATURE_MOTION_DETECTION
+
 #Enable GTK Offload
 ifeq ($(CONFIG_EXT_WOW), 1)
 CDEFINES += -DWLAN_FEATURE_EXTWOW_SUPPORT
@@ -1655,6 +1657,12 @@ CDEFINES += -DMSM8976_TCP_PERF
 CDEFINES += -DACS_FW_REPORT_PARAM
 endif
 
+ifeq ($(CONFIG_ARCH_MSM8953), y)
+CDEFINES += -DTX_COMPLETION_THREAD
+CDEFINES += -DMSM8976_TCP_PERF
+CDEFINES += -DACS_FW_REPORT_PARAM
+endif
+
 ifdef CPTCFG_QCA_CLD_WLAN
 CDEFINES += -DWITH_BACKPORTS
 #Enable OBSS feature
@@ -1711,7 +1719,7 @@ KBUILD_CPPFLAGS += $(CDEFINES)
 # WLAN driver.  Note that we must use EXTRA_CFLAGS here so that it
 # will override the kernel settings.
 ifeq ($(call cc-option-yn, -Wmaybe-uninitialized),y)
-EXTRA_CFLAGS += -Wmaybe-uninitialized
+EXTRA_CFLAGS += -Wmaybe-uninitialized -Oz
 endif
 
 # Disable certain flags for Clang as they are spammy and I'm not fixing them :^)
