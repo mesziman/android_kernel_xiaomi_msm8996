@@ -26,7 +26,7 @@ export USE_CCACHE=1
 export CCACHE_DIR=$CCACHEDIR/.ccache
 
 make clean && make mrproper
-make capricorn_defconfig
+make capriszar_defconfig
 make -j$( nproc --all )
 
 {
