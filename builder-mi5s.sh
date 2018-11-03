@@ -4,6 +4,7 @@ KERNEL_DIR=$PWD
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel2
 CCACHEDIR=../CCACHE/capricorn
 TOOLCHAINDIR=/pipeline/build/root/toolchain/aarch64-linux-android-4.9
+TOOLCHAIN32=/pipeline/build/root/toolchain/arm-linux-androideabi-4.9
 DATE=$(date +"%d%m%Y")
 KERNEL_NAME="Syberia"
 DEVICE="-capricorn-"
@@ -21,6 +22,7 @@ export CC=/pipeline/build/root/toolchain/SnapDragonLLVM_6.0/prebuilt/linux-x86_6
 export CXX=/pipeline/build/root/toolchain/SnapDragonLLVM_6.0/prebuilt/linux-x86_64/bin/clang++
 export CLANG_TRIPLE=aarch64-linux-gnu-
 export CROSS_COMPILE=$TOOLCHAINDIR/bin/aarch64-linux-android-
+export CROSS_COMPILE32=$TOOLCHAINDIR/bin/arm-linux-androideabi-
 export LD_LIBRARY_PATH=$TOOLCHAINDIR/lib/
 export USE_CCACHE=1
 export CCACHE_DIR=$CCACHEDIR/.ccache
@@ -31,8 +33,11 @@ make -j$( nproc --all )
 
 {
 cp $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb $ANYKERNEL_DIR/capricorn
+} || {
+if [ $? != 0 ]; then
+  echo "FAILED BUILD"
+fi
 }
-
 
 cd $ANYKERNEL_DIR/capricorn
 zip -r9 $FINAL_ZIP * -x *.zip $FINAL_ZIP
