@@ -27,6 +27,8 @@ export LD_LIBRARY_PATH=$TOOLCHAINDIR/lib/
 export USE_CCACHE=1
 export CCACHE_DIR=$CCACHEDIR/.ccache
 
+ls $TOOLCHAIN32
+
 make clean && make mrproper
 make capriszar_defconfig
 make -j$( nproc --all )
