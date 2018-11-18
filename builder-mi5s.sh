@@ -18,8 +18,8 @@ rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
 export ARCH=arm64
 export KBUILD_BUILD_USER="mesziman"
 export KBUILD_BUILD_HOST="github"
-export CC=/pipeline/build/root/toolchain/SnapDragonLLVM_6.0/prebuilt/linux-x86_64/bin/clang
-export CXX=/pipeline/build/root/toolchain/SnapDragonLLVM_6.0/prebuilt/linux-x86_64/bin/clang++
+export CC=/pipeline/build/root/toolchain/dtc/bin/clang
+export CXX=/pipeline/build/root/toolchain/dtc/bin/clang++
 export CLANG_TRIPLE=aarch64-linux-gnu-
 export CROSS_COMPILE=$TOOLCHAINDIR/bin/aarch64-linux-android-
 export CROSS_COMPILE_ARM32=$TOOLCHAIN32/bin/arm-linux-androideabi-
