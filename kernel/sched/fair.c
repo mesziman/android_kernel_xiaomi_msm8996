@@ -3127,6 +3127,108 @@ static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq)
 
 static int idle_balance(struct rq *this_rq);
 
+static inline unsigned long _task_util_est(struct task_struct *p)
+{
+	struct util_est ue = READ_ONCE(p->se.avg.util_est);
+
+	return max(ue.ewma, ue.enqueued);
+}
+
+static inline unsigned long task_util_est(struct task_struct *p)
+{
+	return max(task_util(p), _task_util_est(p));
+}
+
+static inline void util_est_enqueue(struct cfs_rq *cfs_rq,
+				    struct task_struct *p)
+{
+	unsigned int enqueued;
+
+	if (!sched_feat(UTIL_EST))
+		return;
+
+	/* Update root cfs_rq's estimated utilization */
+	enqueued  = cfs_rq->avg.util_est.enqueued;
+	enqueued += _task_util_est(p);
+	WRITE_ONCE(cfs_rq->avg.util_est.enqueued, enqueued);
+}
+
+/*
+ * Check if a (signed) value is within a specified (unsigned) margin,
+ * based on the observation that:
+ *
+ *     abs(x) < y := (unsigned)(x + y - 1) < (2 * y - 1)
+ *
+ * NOTE: this only works when value + maring < INT_MAX.
+ */
+static inline bool within_margin(int value, int margin)
+{
+	return ((unsigned int)(value + margin - 1) < (2 * margin - 1));
+}
+
+static void
+util_est_dequeue(struct cfs_rq *cfs_rq, struct task_struct *p, bool task_sleep)
+{
+	long last_ewma_diff;
+	struct util_est ue;
+
+	if (!sched_feat(UTIL_EST))
+		return;
+
+	/*
+	 * Update root cfs_rq's estimated utilization
+	 *
+	 * If *p is the last task then the root cfs_rq's estimated utilization
+	 * of a CPU is 0 by definition.
+	 */
+	ue.enqueued = 0;
+	if (cfs_rq->nr_running) {
+		ue.enqueued  = cfs_rq->avg.util_est.enqueued;
+		ue.enqueued -= min_t(unsigned int, ue.enqueued,
+				     _task_util_est(p));
+	}
+	WRITE_ONCE(cfs_rq->avg.util_est.enqueued, ue.enqueued);
+
+	/*
+	 * Skip update of task's estimated utilization when the task has not
+	 * yet completed an activation, e.g. being migrated.
+	 */
+	if (!task_sleep)
+		return;
+
+	/*
+	 * Skip update of task's estimated utilization when its EWMA is
+	 * already ~1% close to its last activation value.
+	 */
+	ue = p->se.avg.util_est;
+	ue.enqueued = task_util(p);
+	last_ewma_diff = ue.enqueued - ue.ewma;
+	if (within_margin(last_ewma_diff, (SCHED_CAPACITY_SCALE / 100)))
+		return;
+
+	/*
+	 * Update Task's estimated utilization
+	 *
+	 * When *p completes an activation we can consolidate another sample
+	 * of the task size. This is done by storing the current PELT value
+	 * as ue.enqueued and by using this value to update the Exponential
+	 * Weighted Moving Average (EWMA):
+	 *
+	 *  ewma(t) = w *  task_util(p) + (1-w) * ewma(t-1)
+	 *          = w *  task_util(p) +         ewma(t-1)  - w * ewma(t-1)
+	 *          = w * (task_util(p) -         ewma(t-1)) +     ewma(t-1)
+	 *          = w * (      last_ewma_diff            ) +     ewma(t-1)
+	 *          = w * (last_ewma_diff  +  ewma(t-1) / w)
+	 *
+	 * Where 'w' is the weight of new samples, which is configured to be
+	 * 0.25, thus making w=1/4 ( >>= UTIL_EST_WEIGHT_SHIFT)
+	 */
+	ue.ewma <<= UTIL_EST_WEIGHT_SHIFT;
+	ue.ewma  += last_ewma_diff;
+	ue.ewma >>= UTIL_EST_WEIGHT_SHIFT;
+	WRITE_ONCE(p->se.avg.util_est, ue);
+}
+
 #else /* CONFIG_SMP */
 
 static inline int
@@ -3155,6 +3257,13 @@ static inline int idle_balance(struct rq *rq)
 {
 	return 0;
 }
+
+static inline void
+util_est_enqueue(struct cfs_rq *cfs_rq, struct task_struct *p) {}
+
+static inline void
+util_est_dequeue(struct cfs_rq *cfs_rq, struct task_struct *p,
+		 bool task_sleep) {}
 
 #endif /* CONFIG_SMP */
 
@@ -4577,6 +4686,7 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 	}
 
 #endif /* CONFIG_SMP */
+	util_est_enqueue(&rq->cfs, p);
 	hrtick_update(rq);
 }
 
@@ -4664,6 +4774,7 @@ static void dequeue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 		walt_dec_cumulative_runnable_avg(rq, p);
 #endif /* CONFIG_SMP */
 
+	util_est_dequeue(&rq->cfs, p, task_sleep);
 	hrtick_update(rq);
 }
 
@@ -6108,7 +6219,8 @@ err:
  */
 static int cpu_util_wake(int cpu, struct task_struct *p)
 {
-	unsigned long util, capacity;
+	struct cfs_rq *cfs_rq;
+	unsigned int util;
 
 #ifdef CONFIG_SCHED_WALT
 	/*
@@ -6121,14 +6233,52 @@ static int cpu_util_wake(int cpu, struct task_struct *p)
 	    p->state == TASK_WAKING)
 		return cpu_util(cpu);
 #endif
+
 	/* Task has no contribution or is new */
-	if (cpu != task_cpu(p) || !p->se.avg.last_update_time)
+	if (cpu != task_cpu(p) || !READ_ONCE(p->se.avg.last_update_time))
 		return cpu_util(cpu);
 
-	capacity = capacity_orig_of(cpu);
-	util = max_t(long, cpu_util(cpu) - task_util(p), 0);
+	cfs_rq = &cpu_rq(cpu)->cfs;
+	util = READ_ONCE(cfs_rq->avg.util_avg);
 
-	return (util >= capacity) ? capacity : util;
+	/* Discount task's blocked util from CPU's util */
+	util -= min_t(unsigned int, util, task_util(p));
+
+	/*
+	 * Covered cases:
+	 *
+	 * a) if *p is the only task sleeping on this CPU, then:
+	 *      cpu_util (== task_util) > util_est (== 0)
+	 *    and thus we return:
+	 *      cpu_util_wake = (cpu_util - task_util) = 0
+	 *
+	 * b) if other tasks are SLEEPING on this CPU, which is now exiting
+	 *    IDLE, then:
+	 *      cpu_util >= task_util
+	 *      cpu_util > util_est (== 0)
+	 *    and thus we discount *p's blocked utilization to return:
+	 *      cpu_util_wake = (cpu_util - task_util) >= 0
+	 *
+	 * c) if other tasks are RUNNABLE on that CPU and
+	 *      util_est > cpu_util
+	 *    then we use util_est since it returns a more restrictive
+	 *    estimation of the spare capacity on that CPU, by just
+	 *    considering the expected utilization of tasks already
+	 *    runnable on that CPU.
+	 *
+	 * Cases a) and b) are covered by the above code, while case c) is
+	 * covered by the following code when estimated utilization is
+	 * enabled.
+	 */
+	if (sched_feat(UTIL_EST))
+		util = max(util, READ_ONCE(cfs_rq->avg.util_est.enqueued));
+
+	/*
+	 * Utilization (estimated) can exceed the CPU capacity, thus let's
+	 * clamp to the maximum CPU capacity to ensure consistency with
+	 * the cpu_util call.
+	 */
+	return min_t(unsigned long, util, capacity_orig_of(cpu));
 }
 
 static int start_cpu(bool boosted)
@@ -6159,6 +6309,18 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 	schedstat_inc(p, se.statistics.nr_wakeups_fbt_attempts);
 	schedstat_inc(this_rq(), eas_stats.fbt_attempts);
 
+	/*
+	 * In most cases, target_capacity tracks capacity_orig of the most
+	 * energy efficient CPU candidate, thus requiring to minimise
+	 * target_capacity. For these cases target_capacity is already
+	 * initialized to ULONG_MAX.
+	 * However, for prefer_idle and boosted tasks we look for a high
+	 * performance CPU, thus requiring to maximise target_capacity. In this
+	 * case we initialise target_capacity to 0.
+	 */
+	if (prefer_idle && boosted)
+		target_capacity = 0;
+
 	/* Find start CPU based on boost value */
 	cpu = start_cpu(boosted);
 	if (cpu < 0) {
@@ -6182,6 +6344,8 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 			unsigned long capacity_curr = capacity_curr_of(i);
 			unsigned long capacity_orig = capacity_orig_of(i);
 			unsigned long wake_util, new_util;
+			long spare_cap;
+			int idle_idx = INT_MAX;
 
 			if (!cpu_online(i))
 				continue;
@@ -6205,6 +6369,17 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 			new_util = max(min_util, new_util);
 			if (new_util > capacity_orig)
 				continue;
+
+			/*
+			 * Pre-compute the maximum possible capacity we expect
+			 * to have available on this CPU once the task is
+			 * enqueued here.
+			 */
+			spare_cap = capacity_orig - new_util;
+
+			if (idle_cpu(i))
+				idle_idx = idle_get_state_idx(cpu_rq(i));
+
 
 			/*
 			 * Case A) Latency sensitive tasks
@@ -6238,27 +6413,42 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 
 				/*
 				 * Case A.1: IDLE CPU
-				 * Return the first IDLE CPU we find.
+				 * Return the best IDLE CPU we find:
+				 * - for boosted tasks: the CPU with the highest
+				 * performance (i.e. biggest capacity_orig)
+				 * - for !boosted tasks: the most energy
+				 * efficient CPU (i.e. smallest capacity_orig)
 				 */
 				if (idle_cpu(i)) {
 					schedstat_inc(p, se.statistics.nr_wakeups_fbt_pref_idle);
 					schedstat_inc(this_rq(), eas_stats.fbt_pref_idle);
 
-					trace_sched_find_best_target(p,
-							prefer_idle, min_util,
-							cpu, best_idle_cpu,
-							best_active_cpu, i);
+					if (boosted &&
+					    capacity_orig < target_capacity)
+						continue;
+					if (!boosted &&
+					    capacity_orig > target_capacity)
+						continue;
+					if (capacity_orig == target_capacity &&
+					    sysctl_sched_cstate_aware &&
+					    best_idle_cstate <= idle_idx)
+						continue;
 
-					return i;
+					target_capacity = capacity_orig;
+					best_idle_cstate = idle_idx;
+					best_idle_cpu = i;
+					continue;
 				}
+				if (best_idle_cpu != -1)
+					continue;
 
 				/*
 				 * Case A.2: Target ACTIVE CPU
 				 * Favor CPUs with max spare capacity.
 				 */
-				if ((capacity_curr > new_util) &&
-					(capacity_orig - new_util > target_max_spare_cap)) {
-					target_max_spare_cap = capacity_orig - new_util;
+				if (capacity_curr > new_util &&
+				    spare_cap > target_max_spare_cap) {
+					target_max_spare_cap = spare_cap;
 					target_cpu = i;
 					continue;
 				}
@@ -6327,8 +6517,6 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 			 * consumptions without affecting performance.
 			 */
 			if (idle_cpu(i)) {
-				int idle_idx = idle_get_state_idx(cpu_rq(i));
-
 				/*
 				 * Skip CPUs in deeper idle state, but only
 				 * if they are also less energy efficient.
@@ -6369,10 +6557,10 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 
 			/* Favor CPUs with maximum spare capacity */
 			if (capacity_orig == target_capacity &&
-			    (capacity_orig - new_util) < target_max_spare_cap)
+			    spare_cap < target_max_spare_cap)
 				continue;
 
-			target_max_spare_cap = capacity_orig - new_util;
+			target_max_spare_cap = spare_cap;
 			target_capacity = capacity_orig;
 			target_cpu = i;
 		}
@@ -6388,7 +6576,7 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 	 *
 	 * - prefer_idle tasks:
 	 *
-	 *   a) IDLE CPU available, we return immediately
+	 *   a) IDLE CPU available: best_idle_cpu
 	 *   b) ACTIVE CPU where task fits and has the bigger maximum spare
 	 *      capacity (i.e. target_cpu)
 	 *   c) ACTIVE CPU with less contention due to other tasks
@@ -6399,6 +6587,15 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 	 *   a) ACTIVE CPU: target_cpu
 	 *   b) IDLE CPU: best_idle_cpu
 	 */
+
+	if (prefer_idle && (best_idle_cpu != -1)) {
+		trace_sched_find_best_target(p, prefer_idle, min_util, cpu,
+					     best_idle_cpu, best_active_cpu,
+					     best_idle_cpu);
+
+		return best_idle_cpu;
+	}
+
 	if (target_cpu == -1)
 		target_cpu = prefer_idle
 			? best_active_cpu
@@ -6442,7 +6639,7 @@ static int wake_cap(struct task_struct *p, int cpu, int prev_cpu)
 	return min_cap * 1024 < task_util(p) * capacity_margin;
 }
 
-static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync)
+static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu)
 {
 	bool boosted, prefer_idle;
 	struct sched_domain *sd;
@@ -6456,14 +6653,6 @@ static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync
 	schedstat_inc(p, se.statistics.nr_wakeups_secb_attempts);
 	schedstat_inc(this_rq(), eas_stats.secb_attempts);
 
-	if (sysctl_sched_sync_hint_enable && sync) {
-		if (cpumask_test_cpu(cpu, tsk_cpus_allowed(p))) {
-			schedstat_inc(p, se.statistics.nr_wakeups_secb_sync);
-			schedstat_inc(this_rq(), eas_stats.secb_sync);
-			return cpu;
-		}
-	}
-
 #ifdef CONFIG_CGROUP_SCHEDTUNE
 	boosted = schedtune_task_boost(p) > 0;
 	prefer_idle = schedtune_prefer_idle(p) > 0;
@@ -6472,12 +6661,10 @@ static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync
 	prefer_idle = 0;
 #endif
 
-	rcu_read_lock();
-
 	sd = rcu_dereference(per_cpu(sd_ea, prev_cpu));
 	if (!sd) {
 		target_cpu = prev_cpu;
-		goto unlock;
+		goto out;
 	}
 
 	sync_entity_load_avg(&p->se);
@@ -6486,7 +6673,7 @@ static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync
 	next_cpu = find_best_target(p, &backup_cpu, boosted, prefer_idle);
 	if (next_cpu == -1) {
 		target_cpu = prev_cpu;
-		goto unlock;
+		goto out;
 	}
 
 	/* Unconditionally prefer IDLE CPUs for boosted/prefer_idle tasks */
@@ -6494,14 +6681,14 @@ static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync
 		schedstat_inc(p, se.statistics.nr_wakeups_secb_idle_bt);
 		schedstat_inc(this_rq(), eas_stats.secb_idle_bt);
 		target_cpu = next_cpu;
-		goto unlock;
+		goto out;
 	}
 
 	target_cpu = prev_cpu;
 	if (next_cpu == prev_cpu) {
 		schedstat_inc(p, se.statistics.nr_wakeups_secb_count);
 		schedstat_inc(this_rq(), eas_stats.secb_count);
-		goto unlock;
+		goto out;
 	}
 
 	eenv = rcu_dereference(per_cpu(energy_env, cpu));
@@ -6518,7 +6705,7 @@ static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync
 		schedstat_inc(p, se.statistics.nr_wakeups_secb_insuff_cap);
 		schedstat_inc(this_rq(), eas_stats.secb_insuff_cap);
 		target_cpu = next_cpu;
-		goto unlock;
+		goto out;
 	}
 
 	cpumask_clear(&eenv->cpus_mask);
@@ -6545,9 +6732,7 @@ static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync
 
 	target_cpu = eenv->next_cpu;
 
-unlock:
-	rcu_read_unlock();
-
+out:
 	return target_cpu;
 }
 
@@ -6590,8 +6775,12 @@ select_task_rq_fair(struct task_struct *p, int prev_cpu, int sd_flag, int wake_f
 			      cpumask_test_cpu(cpu, &p->cpus_allowed);
 	}
 
-	if (energy_aware() && !(cpu_rq(prev_cpu)->rd->overutilized))
-		return select_energy_cpu_brute(p, prev_cpu, sync);
+	if (energy_aware() && !(cpu_rq(prev_cpu)->rd->overutilized)) {
+		rcu_read_lock();
+		new_cpu = select_energy_cpu_brute(p, prev_cpu);
+		rcu_read_unlock();
+		return new_cpu;
+	}
 
 	rcu_read_lock();
 	for_each_domain(cpu, tmp) {
@@ -9172,8 +9361,12 @@ static int idle_balance(struct rq *this_rq)
 		int continue_balancing = 1;
 		u64 t0, domain_cost;
 
-		if (!(sd->flags & SD_LOAD_BALANCE))
+		if (!(sd->flags & SD_LOAD_BALANCE)) {
+			if (time_after_eq(jiffies,
+					  sd->groups->sgc->next_update))
+				update_group_capacity(sd, this_cpu);
 			continue;
+		}
 
 		if (this_rq->avg_idle < curr_cost + sd->max_newidle_lb_cost) {
 			update_next_balance(sd, 0, &next_balance);
@@ -9513,8 +9706,12 @@ static void rebalance_domains(struct rq *rq, enum cpu_idle_type idle)
 		}
 		max_cost += sd->max_newidle_lb_cost;
 
-		if (!(sd->flags & SD_LOAD_BALANCE))
+		if (!(sd->flags & SD_LOAD_BALANCE)) {
+			if (time_after_eq(jiffies,
+					  sd->groups->sgc->next_update))
+				update_group_capacity(sd, cpu);
 			continue;
+		}
 
 		/*
 		 * Stop the load balance at this level. There is another
@@ -9817,7 +10014,7 @@ void check_for_migration(struct rq *rq, struct task_struct *p)
 		    rq->curr->nr_cpus_allowed == 1)
 			return;
 
-		new_cpu = select_energy_cpu_brute(p, cpu, 0);
+		new_cpu = select_energy_cpu_brute(p, cpu);
 		if (capacity_orig_of(new_cpu) > capacity_orig_of(cpu)) {
 			active_balance = kick_active_balance(rq, p, new_cpu);
 			if (active_balance)
