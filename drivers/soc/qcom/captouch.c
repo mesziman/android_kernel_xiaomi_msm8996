@@ -359,7 +359,7 @@ bool captouch_get_status(void)
 
 void captouch_key_report(int key_status)
 {
-	__pm_wakeup_event(&g_drvdata->ttw_wl, CAPTOUCH_TTW_HOLD_TIME);
+	__pm_wakeup_event(&g_drvdata->ttw_wl, msecs_to_jiffies(CAPTOUCH_TTW_HOLD_TIME));
 
 	if (key_status == 1)
 		g_drvdata->event = CAPTOUCH_TYPE_FINGER_DOWN;
