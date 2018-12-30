@@ -1047,7 +1047,7 @@ static irqreturn_t qpnp_resin_irq(int irq, void *_pon)
 	int rc;
 	struct qpnp_pon *pon = _pon;
 
-	__pm_wakeup_event(&volume_down_wl, 300);
+	__pm_wakeup_event(&volume_down_wl, 3000);
 	rc = qpnp_pon_input_dispatch(pon, PON_RESIN);
 	if (rc)
 		dev_err(&pon->spmi->dev, "Unable to send input event\n");
