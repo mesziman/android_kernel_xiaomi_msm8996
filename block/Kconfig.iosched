@@ -52,7 +52,6 @@ config IOSCHED_CFQ
 	  among all processes in the system. It should provide a fair
 	  and low latency working environment, suitable for both desktop
 	  and server systems.
-
 	  This is the default I/O scheduler.
 
 config IOSCHED_FIOPS
@@ -60,8 +59,8 @@ config IOSCHED_FIOPS
 	default y
 	---help---
 	  This is an IOPS based I/O scheduler. It will try to distribute
-    IOPS equally among all processes in the system. It's mainly for
-    Flash based storage.
+          IOPS equally among all processes in the system. Its mainly for
+          Flash based storage.
 
 config IOSCHED_SIO
 	tristate "Simple I/O scheduler"
