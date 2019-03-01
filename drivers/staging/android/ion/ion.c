@@ -332,8 +332,7 @@ static void ion_handle_get(struct ion_handle *handle)
 }
 
 /* Must hold the client lock */
-
-static struct ion_handle* ion_handle_get_check_overflow(
+static struct ion_handle *ion_handle_get_check_overflow(
 					struct ion_handle *handle)
 {
 	if (atomic_read(&handle->ref.refcount) + 1 == 0)
