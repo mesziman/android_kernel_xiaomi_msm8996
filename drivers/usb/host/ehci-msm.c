@@ -101,8 +101,7 @@ static int ehci_msm_probe(struct platform_device *pdev)
 	}
 
 	hcd_to_bus(hcd)->skip_resume = true;
-
-	hcd->irq = platform_get_irq(pdev, 0);
+        hcd->irq = platform_get_irq(pdev, 0);
 	if (hcd->irq < 0) {
 		dev_err(&pdev->dev, "Unable to get IRQ resource\n");
 		ret = hcd->irq;

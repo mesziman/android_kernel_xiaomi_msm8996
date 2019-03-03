@@ -9075,7 +9075,6 @@ static int ufshcd_devfreq_target(struct device *dev,
 
 	if (!ufshcd_is_clkscaling_supported(hba))
 		return -EINVAL;
-
 	if ((*freq > 0) && (*freq < UINT_MAX)) {
 		dev_err(hba->dev, "%s: invalid freq = %lu\n", __func__, *freq);
 		return -EINVAL;
