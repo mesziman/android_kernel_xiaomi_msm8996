@@ -1080,9 +1080,9 @@ static int hid_debug_events_open(struct inode *inode, struct file *file)
 		goto out;
 	}
 
-	if (!(list->hid_debug_buf = kzalloc(HID_DEBUG_BUFSIZE, GFP_KERNEL))) {
-		err = -ENOMEM;
-		kfree(list);
+	err = kfifo_alloc(&list->hid_debug_fifo, HID_DEBUG_FIFOSIZE, GFP_KERNEL);	
+        if (err){
+         	kfree(list);
 		goto out;
 	}
 	list->hdev = (struct hid_device *) inode->i_private;
