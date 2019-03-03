@@ -1238,6 +1238,7 @@ static int xpad_play_effect(struct input_dev *dev, void *data, struct ff_effect 
 
 	strong = effect->u.rumble.strong_magnitude;
 	weak = effect->u.rumble.weak_magnitude;
+
 	spin_lock_irqsave(&xpad->odata_lock, flags);
 
 	switch (xpad->xtype) {
@@ -1477,7 +1478,6 @@ static void xpad_led_disconnect(struct usb_xpad *xpad)
 #else
 static int xpad_led_probe(struct usb_xpad *xpad) { return 0; }
 static void xpad_led_disconnect(struct usb_xpad *xpad) { }
-static void xpad_identify_controller(struct usb_xpad *xpad) { }
 #endif
 
 static int xpad_start_input(struct usb_xpad *xpad)
@@ -1619,111 +1619,6 @@ static void xpad_deinit_input(struct usb_xpad *xpad)
 static int xpad_init_input(struct usb_xpad *xpad)
 {
 	struct input_dev *input_dev;
-	int i, error;
-
-	input_dev = input_allocate_device();
-	if (!input_dev)
-		return -ENOMEM;
-
-	xpad->dev = input_dev;
-	input_dev->name = xpad->name;
-	input_dev->phys = xpad->phys;
-	usb_to_input_id(xpad->udev, &input_dev->id);
-
-	if (xpad->xtype == XTYPE_XBOX360W) {
-		/* x360w controllers and the receiver have different ids */
-		input_dev->id.product = 0x02a1;
-	}
-
-	input_dev->dev.parent = &xpad->intf->dev;
-
-	input_set_drvdata(input_dev, xpad);
-
-	if (xpad->xtype != XTYPE_XBOX360W) {
-		input_dev->open = xpad_open;
-		input_dev->close = xpad_close;
-	}
-
-	if (!(xpad->mapping & MAP_STICKS_TO_NULL)) {
-		/* set up axes */
-		for (i = 0; xpad_abs[i] >= 0; i++)
-			xpad_set_up_abs(input_dev, xpad_abs[i]);
-	}
-
-	/* set up standard buttons */
-	for (i = 0; xpad_common_btn[i] >= 0; i++)
-		input_set_capability(input_dev, EV_KEY, xpad_common_btn[i]);
-
-	/* set up model-specific ones */
-	if (xpad->xtype == XTYPE_XBOX360 || xpad->xtype == XTYPE_XBOX360W ||
-	    xpad->xtype == XTYPE_XBOXONE) {
-		for (i = 0; xpad360_btn[i] >= 0; i++)
-			input_set_capability(input_dev, EV_KEY, xpad360_btn[i]);
-	} else {
-		for (i = 0; xpad_btn[i] >= 0; i++)
-			input_set_capability(input_dev, EV_KEY, xpad_btn[i]);
-	}
-
-	if (xpad->mapping & MAP_DPAD_TO_BUTTONS) {
-		for (i = 0; xpad_btn_pad[i] >= 0; i++)
-			input_set_capability(input_dev, EV_KEY,
-					     xpad_btn_pad[i]);
-	}
-
-	/*
-	 * This should be a simple else block. However historically
-	 * xbox360w has mapped DPAD to buttons while xbox360 did not. This
-	 * made no sense, but now we can not just switch back and have to
-	 * support both behaviors.
-	 */
-	if (!(xpad->mapping & MAP_DPAD_TO_BUTTONS) ||
-	    xpad->xtype == XTYPE_XBOX360W) {
-		for (i = 0; xpad_abs_pad[i] >= 0; i++)
-			xpad_set_up_abs(input_dev, xpad_abs_pad[i]);
-	}
-
-	if (xpad->mapping & MAP_TRIGGERS_TO_BUTTONS) {
-		for (i = 0; xpad_btn_triggers[i] >= 0; i++)
-			input_set_capability(input_dev, EV_KEY,
-					     xpad_btn_triggers[i]);
-	} else {
-		for (i = 0; xpad_abs_triggers[i] >= 0; i++)
-			xpad_set_up_abs(input_dev, xpad_abs_triggers[i]);
-	}
-
-	error = xpad_init_ff(xpad);
-	if (error)
-		goto err_free_input;
-
-	error = xpad_led_probe(xpad);
-	if (error)
-		goto err_destroy_ff;
-
-	error = input_register_device(xpad->dev);
-	if (error)
-		goto err_disconnect_led;
-
-	xpad->input_created = true;
-	return 0;
-
-err_disconnect_led:
-	xpad_led_disconnect(xpad);
-err_destroy_ff:
-	input_ff_destroy(input_dev);
-err_free_input:
-	input_free_device(input_dev);
-	return error;
-}
-
-static void xpad_deinit_input(struct usb_xpad *xpad)
-{
-	xpad_led_disconnect(xpad);
-	input_unregister_device(xpad->dev);
-}
-
-static int xpad_init_input(struct usb_xpad *xpad)
-{
-struct input_dev *input_dev;
 	int i, error;
 
 	input_dev = input_allocate_device();
