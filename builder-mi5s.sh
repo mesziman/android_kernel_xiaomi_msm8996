@@ -35,7 +35,7 @@ ls $TOOLCHAIN32
 
 make clean && make mrproper
 make capriszar_defconfig
-make -j$( nproc --all )
+make -C $(KERNEL_DIR) SUBDIRS=$(PWD) -j$( nproc --all )
 
 {
 cp $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb $ANYKERNEL_DIR/capricorn
