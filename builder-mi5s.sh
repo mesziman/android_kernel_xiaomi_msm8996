@@ -39,8 +39,6 @@ export USE_CCACHE=1
 export CCACHE_DIR=$CCACHEDIR/.ccache
 
 echo "which cl $(which clang)"
-echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
-echo "realpath of 32tc $(realpath $(dir $(which ${CROSS_COMPILE_ARM32}ld))/..)"
 make clean && make mrproper
 make O=out -C $KERNEL_DIR capriszar_defconfig
 make O=out -C $KERNEL_DIR  -j$( nproc --all )
