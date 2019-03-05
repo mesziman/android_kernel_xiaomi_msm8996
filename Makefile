@@ -398,7 +398,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 #		   -mllvm -polly-detect-keep-going \
 #		   -mllvm -polly-vectorizer=stripmine
 
-POLLY_FLAGS	:= -mllvm -polly \
+#POLLY_FLAGS	:= -mllvm -polly \
 	   -mllvm -polly-parallel -lgomp \
 	   -mllvm -polly-run-dce \
 	   -mllvm -polly-run-inliner \
