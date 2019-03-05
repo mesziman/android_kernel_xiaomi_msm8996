@@ -3,8 +3,8 @@
 KERNEL_DIR=$PWD
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel2
 CCACHEDIR=../CCACHE/capricorn
-TOOLCHAINDIR=/pipeline/build/root/toolchain/aarch64-linux-android-4.9
-TOOLCHAIN32=/pipeline/build/root/toolchain/arm-linux-androideabi-4.9
+TOOLCHAINDIR=/pipeline/build/root/toolchain/aarch64-linux-android-4.9/bin
+TOOLCHAIN32=/pipeline/build/root/toolchain/arm-linux-androideabi-4.9/bin
 DATE=$(date +"%d%m%Y")
 KERNEL_NAME="Syberia"
 DEVICE="-capricorn-"
