@@ -411,7 +411,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 #		   -ffast-math -fvectorize -fslp-vectorize -ftree-vectorize -ftree-slp-vectorize
 
 #OPT_FLAGS	:=  -funsafe-math-optimizations -ffast-math 
-OPT_FLAGS:= -Ofast -march=armv8-a+crc -mtune=kryo -funsafe-math-optimizations  \
+OPT_FLAGS:= -Ofast -funsafe-math-optimizations  \
 		-ffast-math  -ftree-vectorize -ftree-slp-vectorize
 
 GCC6WARNINGS	= -Wno-bool-compare -Wno-misleading-indentation -Wno-format -Wno-logical-not-parentheses
