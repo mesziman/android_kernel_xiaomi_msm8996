@@ -14,16 +14,17 @@ FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
 rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
-
+PATH="${PATH}:${TOOLCHAINDIR}:${TOOLCHAIN32}:/pipeline/build/root/toolchain/dtc/bin"
 export ARCH=arm64
 export KBUILD_BUILD_USER="mesziman"
 export KBUILD_BUILD_HOST="github"
 export CC=/pipeline/build/root/toolchain/dtc/bin/clang
-export CXX=/pipeline/build/root/toolchain/dtc/bin/clang++
+#export CXX=/pipeline/build/root/toolchain/dtc/bin/clang++
 export CLANG_TRIPLE=aarch64-linux-gnu-
-export CROSS_COMPILE=$TOOLCHAINDIR/bin/aarch64-linux-android-
-export CROSS_COMPILE_ARM32=$TOOLCHAIN32/bin/arm-linux-androideabi-
-export LD_LIBRARY_PATH=$TOOLCHAINDIR/lib/
+#export CROSS_COMPILE=$TOOLCHAINDIR/bin/aarch64-linux-android-
+export CROSS_COMPILE=aarch64-linux-android-
+#export CROSS_COMPILE_ARM32=$TOOLCHAIN32/bin/arm-linux-androideabi-
+#export LD_LIBRARY_PATH=$TOOLCHAINDIR/lib/
 export USE_CCACHE=1
 export CCACHE_DIR=$CCACHEDIR/.ccache
 
