@@ -410,8 +410,8 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 #OPT_FLAGS	:= -Ofast -march=armv8-a+crc -mtune=kryo -funsafe-math-optimizations  \
 #		   -ffast-math -fvectorize -fslp-vectorize -ftree-vectorize -ftree-slp-vectorize
 
-OPT_FLAGS	:= -mcpu=kryo -funsafe-math-optimizations -ffast-math \
-	   -fvectorize -fslp-vectorize -fopenmp $(POLLY_FLAGS)
+OPT_FLAGS	:= -mcpu=kryo -funsafe-math-optimizations -ffast-math 
+	  
 
 GCC6WARNINGS	= -Wno-bool-compare -Wno-misleading-indentation -Wno-format -Wno-logical-not-parentheses
 GCC7WARNINGS	= $(GCC6WARNINGS) -Wno-int-in-bool-context -Wno-memset-elt-size -Wno-parentheses -Wno-bool-operation -Wno-duplicate-decl-specifier -Wno-stringop-overflow -Wno-format-truncation -Wno-format-overflow -fno-modulo-sched
