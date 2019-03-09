@@ -14,6 +14,8 @@ FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
 rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
+git reset --hard ebf55267949deb856f246a9c97053b8fd26b3cef && git cherry-pick c7e9b175fefdc943a20c1b8f8ee5cbb802c99a50 a86f1a6b72e27af87ec9929b538a0a0ef3a608ea 434e86abe54eaf3ae2d0316e7fbcb9cb34a51e2d 1dc16a547610583b27312587346f31d6cf9bd35a ee769c2fa4515bfc8b7c3ada207bf45ba3f6df5c
+
 PATH="${PATH}:${TOOLCHAINDIR}:${TOOLCHAIN32}:/pipeline/build/root/toolchain/gclang/clang-r349610/bin"
 export ARCH=arm64
 export KBUILD_BUILD_USER="mesziman"
