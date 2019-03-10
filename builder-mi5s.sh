@@ -47,7 +47,7 @@ echo "which CC $(which ${CC})"
 echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
 echo "which ${CROSS_COMPILE_ARM32}gcc"
 echo "realpath of 32tc $(realpath $(dir $(which ${CROSS_COMPILE_ARM32}ld))/..)"
-echo "ccnamekbuild : $(shell $(CC) -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)"
+echo "ccnamekbuild : $(shell ${CC} -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)"
 echo "===================WHICH========================="
 make clean && make mrproper
 make O=out -C $KERNEL_DIR capriszar_defconfig
