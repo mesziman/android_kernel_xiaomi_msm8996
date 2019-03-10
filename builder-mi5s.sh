@@ -40,8 +40,8 @@ export CROSS_COMPILE_ARM32=arm-linux-androideabi-
 export USE_CCACHE=1
 export CCACHE_DIR=$CCACHEDIR/.ccache
 echo "===================WHICH========================="
-echo "which cl $(which clang)"
-echo "which $(which $CLANG_TRIPLE})"
+echo "which CLANG_TRIPLE $(which ${CLANG_TRIPLE})"
+echo "which CC $(which ${CC})"
 echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
 echo "which ${CROSS_COMPILE_ARM32}gcc"
 echo "realpath of 32tc $(realpath $(dir $(which ${CROSS_COMPILE_ARM32}ld))/..)"
