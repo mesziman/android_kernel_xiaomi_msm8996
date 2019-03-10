@@ -56,7 +56,8 @@ echo "===================WHICH========================="
 make clean && make mrproper
 make O=out -C $KERNEL_DIR capriszar_defconfig
 
-make O=out -C $KERNEL_DIR  -j$( nproc --all )
+make O=out -C $KERNEL_DIR  -j$( nproc --all ) CC=clang  CLANG_TRIPLE=aarch64-linux-gnu- \
+CROSS_COMPILE=aarch64-linux-android-
 
 {
 cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb $ANYKERNEL_DIR/capricorn
