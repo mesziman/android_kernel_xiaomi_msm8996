@@ -46,14 +46,14 @@ echo "which CLANG_TRIPLE $(which ${CLANG_TRIPLE}-ld)"
 echo "which CC $(which ${CC})"
 echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
 echo "which ${CROSS_COMPILE_ARM32}gcc"
-echo "cc-name: ${cc-name}"
+env "cc-name=clang" sh -c 'echo "cc-name: ${cc-name}"'
 echo "realpath of 32tc $(realpath $(dir $(which ${CROSS_COMPILE_ARM32}ld))/..)"
-export cc-name="clang"
+
 echo "===================WHICH========================="
-make clean && make mrproper
-make O=out -C $KERNEL_DIR capriszar_defconfig
-echo "cc-name: ${cc-name}"
-make O=out -C $KERNEL_DIR  -j$( nproc --all )
+env "cc-name=clang"  make clean && make mrproper
+env "cc-name=clang" make O=out -C $KERNEL_DIR capriszar_defconfig
+
+env "cc-name=clang" make O=out -C $KERNEL_DIR  -j$( nproc --all )
 
 {
 cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb $ANYKERNEL_DIR/capricorn
