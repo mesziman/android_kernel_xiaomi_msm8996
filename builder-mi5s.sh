@@ -45,6 +45,7 @@ echo "===================WHICH========================="
 echo "which CLANG_TRIPLE $(which ${CLANG_TRIPLE}-ld)"
 echo "which CC $(which ${CC})"
 echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
+/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang -v
 echo "which ${CROSS_COMPILE_ARM32}gcc"
 echo "realpath of 32tc $(realpath $(dir $(which ${CROSS_COMPILE_ARM32}ld))/..)"
 echo "ccnamekbuild : $(shell ${CC} -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)"
