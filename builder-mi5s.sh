@@ -17,7 +17,7 @@ FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
 rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
-PATH="/pipeline/build/root/toolchain/gclang/clang-r349610/bin:${PATH}:${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin"
+PATH="/pipeline/build/root/toolchain/gclang/clang-r349610/bin:${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin:${PATH}"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/aarch64-linux-android/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/aarch64-linux-android/lib64"
@@ -34,7 +34,7 @@ export CC=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang
 export CXX=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang++
 #export cc-name=clang
 export CLANG_TRIPLE=aarch64-linux-gnu-
-export CROSS_COMPILE=$TOOLCHAINDIR/bin/aarch64-linux-gnu-
+export CROSS_COMPILE=aarch64-linux-gnu-
 export CROSS_COMPILE_ARM32=arm-linux-androideabi-
 #export CROSS_COMPILE=aarch64-linux-android-
 #export CROSS_COMPILE_ARM32=arm-linux-androideabi-
@@ -42,7 +42,7 @@ export CROSS_COMPILE_ARM32=arm-linux-androideabi-
 export USE_CCACHE=1
 export CCACHE_DIR=$CCACHEDIR/.ccache
 echo "===================WHICH========================="
-echo "which CLANG_TRIPLE $(which ${CLANG_TRIPLE})"
+echo "which CLANG_TRIPLE $(which ${CLANG_TRIPLE}-ld)"
 echo "which CC $(which ${CC})"
 echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
 echo "which ${CROSS_COMPILE_ARM32}gcc"
