@@ -17,25 +17,25 @@ FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
 rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
-shell  export PATH="/pipeline/build/root/toolchain/gclang/clang-r349610/bin:${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin:${PATH}"
-shell export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/lib"
+export PATH="/pipeline/build/root/toolchain/gclang/clang-r349610/bin:${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin:${PATH}"
+ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/aarch64-linux-android/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/aarch64-linux-android/lib64"
-shell export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAIN32}/lib"
+ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAIN32}/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAIN32}/arm-linux-androideabi/lib"
-shell export LD_LIBRARY_PATH="/pipeline/build/root/toolchain/gclang/clang-r349610/lib64:$LD_LIBRARY_PATH"
-shell export ARCH=arm64
+ export LD_LIBRARY_PATH="/pipeline/build/root/toolchain/gclang/clang-r349610/lib64:$LD_LIBRARY_PATH"
+ export ARCH=arm64
 export KBUILD_BUILD_USER="mesziman"
 export KBUILD_BUILD_HOST="github"
 #export CC=/pipeline/build/root/toolchain/dtc/bin/clang
 #export CC=/pipeline/build/root/toolchain/gclang/clang-r349610/bin
 #export CXX=/pipeline/build/root/toolchain/dtc/bin/clang++
-shell export CC=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang
-shell export CXX=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang++
+ export CC=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang
+ export CXX=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang++
 #export cc-name=clang
-shell export CLANG_TRIPLE=aarch64-linux-gnu-
-shell export CROSS_COMPILE=aarch64-linux-android-
-shell export CROSS_COMPILE_ARM32=arm-linux-androideabi-
+ export CLANG_TRIPLE=aarch64-linux-gnu-
+ export CROSS_COMPILE=aarch64-linux-android-
+ export CROSS_COMPILE_ARM32=arm-linux-androideabi-
 #export CROSS_COMPILE=aarch64-linux-android-
 #export CROSS_COMPILE_ARM32=arm-linux-androideabi-
 #export LD_LIBRARY_PATH=$TOOLCHAINDIR/lib/
@@ -48,7 +48,7 @@ echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
 /pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang -v
 echo "which ${CROSS_COMPILE_ARM32}gcc"
 echo "realpath of 32tc $(realpath $(dir $(which ${CROSS_COMPILE_ARM32}ld))/..)"
-echo "ccnamekbuild : $(shell ${CC} -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)"
+echo "ccnamekbuild : $(shell ${CC} -v 2>&1 | grep -q "clang version" && echo clang || echo gcc && echo $$ && echo $0)"
 
 echo "ccname noshell build : $(${CC} -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)"
 echo "===================WHICH========================="
