@@ -46,10 +46,12 @@ echo "which CLANG_TRIPLE $(which ${CLANG_TRIPLE}-ld)"
 echo "which CC $(which ${CC})"
 echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
 echo "which ${CROSS_COMPILE_ARM32}gcc"
+echo "cc-name: ${cc-name}"
 echo "realpath of 32tc $(realpath $(dir $(which ${CROSS_COMPILE_ARM32}ld))/..)"
 echo "===================WHICH========================="
 make clean && make mrproper
 make O=out -C $KERNEL_DIR capriszar_defconfig
+echo "cc-name: ${cc-name}"
 make O=out -C $KERNEL_DIR  -j$( nproc --all )
 
 {
