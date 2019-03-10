@@ -48,7 +48,7 @@ echo "which 32tc $(which ${CROSS_COMPILE_ARM32}ld))"
 echo "which ${CROSS_COMPILE_ARM32}gcc"
 echo "cc-name: ${cc-name}"
 echo "realpath of 32tc $(realpath $(dir $(which ${CROSS_COMPILE_ARM32}ld))/..)"
-cc-name=clang
+cc-name="clang"
 echo "===================WHICH========================="
 make clean && make mrproper
 make O=out -C $KERNEL_DIR capriszar_defconfig
