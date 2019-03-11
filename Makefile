@@ -399,6 +399,7 @@ KBUILD_CFLAGS := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		-fno-strict-aliasing -fno-common -fshort-wchar \
 		-Werror-implicit-function-declaration \
 		-Wno-format-security \
+		-Wno-vectorizer-no-neon \
 		-std=gnu89 -march=armv8-a -mfpu=crypto-neon-fp-armv8 -mcpu=cortex-a57 #$(call cc-option,-fno-PIE) $(OPT_FLAGS)
 
 KBUILD_AFLAGS_KERNEL :=
