@@ -298,7 +298,7 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = $(CCACHE) gcc
 HOSTCXX      = $(CCACHE) g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -pipe -fomit-frame-pointer -std=gnu89
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -pipe -fomit-frame-pointer -std=gnu89 -march=armv8-a -mfpu=crypto-neon-fp-armv8 -mcpu=cortex-a57
 HOSTCXXFLAGS = -Ofast -pipe
 
 # Decide whether to build built-in, modular, or both.
