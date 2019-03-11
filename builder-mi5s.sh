@@ -17,21 +17,21 @@ FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
 rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
-export PATH="/pipeline/build/root/toolchain/SnapDragonLLVM_6.0/prebuilt/linux-x86_64/bin/:${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin:${PATH}"
+export PATH="/pipeline/build/root/toolchain/gclang/clang-r353983/bin:${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin:${PATH}"
  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/aarch64-linux-android/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/aarch64-linux-android/lib64"
  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAIN32}/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAIN32}/arm-linux-androideabi/lib"
- export LD_LIBRARY_PATH="/pipeline/build/root/toolchain/SnapDragonLLVM_6.0/prebuilt/linux-x86_64/lib:$LD_LIBRARY_PATH"
+ export LD_LIBRARY_PATH="/pipeline/build/root/toolchain/gclang/clang-r349610/lib64:$LD_LIBRARY_PATH"
  export ARCH=arm64
 export KBUILD_BUILD_USER="mesziman"
 export KBUILD_BUILD_HOST="github"
 #export CC=/pipeline/build/root/toolchain/dtc/bin/clang
 #export CC=/pipeline/build/root/toolchain/gclang/clang-r349610/bin
 #export CXX=/pipeline/build/root/toolchain/dtc/bin/clang++
-# export CC=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang
-# export CXX=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang++
+ export CC=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang
+ export CXX=/pipeline/build/root/toolchain/gclang/clang-r349610/bin/clang++
 #export cc-name=clang
  export CLANG_TRIPLE=aarch64-linux-gnu-
  export CROSS_COMPILE=aarch64-linux-android-
