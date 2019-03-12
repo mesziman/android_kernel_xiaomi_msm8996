@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-dpkg --add-architecture amd64 && apt-get -qq update && apt-get -qq install -y libomp-dev binutils-arm-linux-gnueabi g++-multilib gcc-multilib binutils-aarch64-linux-gnu git ccache automake bc lzop bison gperf build-essential zip curl zlib1g-dev  g++-multilib python-networkx libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng z3-dev &&
+dpkg --add-architecture amd64 && apt-get -qq update && apt-get -qq install -y libomp-dev binutils-arm-linux-gnueabi g++-multilib gcc-multilib binutils-aarch64-linux-gnu git ccache automake bc lzop bison gperf build-essential zip curl zlib1g-dev  g++-multilib python-networkx libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng z3 &&
 export LOFASZ=$PWD && 
 git clone --depth=2 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 /pipeline/build/root/toolchain/aarch64-linux-android-4.9 &&
 cd /pipeline/build/root/toolchain/aarch64-linux-android-4.9 && git reset --hard 22f053ccdfd0d73aafcceff3419a5fe3c01e878b &&
