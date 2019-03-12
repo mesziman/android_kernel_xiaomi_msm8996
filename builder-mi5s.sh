@@ -9,10 +9,10 @@ TOOLCHAIN32=/pipeline/build/root/toolchain/arm-linux-androideabi-4.9
 TOOLDTC=/pipeline/build/root/toolchain/dtc
 TOOLGC=/pipeline/build/root/toolchain/gclang/clang-r349610/
 DATE=$(date +"%d%m%Y")
-KERNEL_NAME="Syberia"
+KERNEL_NAME="syberia"
 DEVICE="-capricorn-"
-VER="-0.5-"
-TYPE="PIE-EAS"
+VER="0.1"
+TYPE="EAS-rebase-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
