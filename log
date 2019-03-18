@@ -1,0 +1,218 @@
+*   [31m9a31f48[m -[33m (s/9.0)[m Merge branch 'kernel.lnx.3.18.r34-rel' of https://github.com/android-linux-stable/msm-3.18 [32m(12 days ago)[m ВDennySPB
+* | | | | | | | [31me0123ae[m -[33m[m arm64: Provide atomic_{or,xor,and} [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m505bd27[m -[33m[m cpu_input_boost: Eliminate spin lock by using atomic cmpxchg loop [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m4ebc2e1[m -[33m[m cpu_input_boost: Destroy workqueue on error path in init [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mffe0370[m -[33m[m cpu_input_boost: Simplify bitwise operations used to store boost state [32m(3 months ago)[m DennySPB
+* | | | | | | | [31me9d7f60[m -[33m[m kernel: Boost CPU to the max when launcher3 becomes a top app [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m8b154ef[m -[33m[m msm: kgsl: Correctly limit max number of contexts per process [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m12ef384[m -[33m[m Revert "Defconfig: enable MSM_PERFORMANCE and MSM_PERFORMANCE_CPUFREQ_LIMITS_VOTING_ONLY" [32m(3 months ago)[m DennySPB
+* | | | | | | | [31me251c4d[m -[33m[m Merge branch 'upstream-linux-3.18.y' [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m422c7c9[m -[33m[m defconfig: switch back to cpu_input_boost [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m032d160[m -[33m[m dsp: send spkr prot calibration after default acdb. [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m24705d13[m -[33m[m BACKPORT: sched/fair: Use util_est in LB and WU paths [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m6bd9566[m -[33m[m BACKPORT: sched/fair: Add util_est on top of PELT [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m7173403[m -[33m[m sched: energy: handle memory allocation failure [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m0b53076[m -[33m[m BACKPORT: sched/cpufreq/schedutil: Use util_est for OPP selection [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m28c80af[m -[33m[m cpu_input_boost: make wq unbound [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m52e1e08[m -[33m[m cpu_input_boost: avoid boosting big cluster when load is low [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mf76d7fe[m -[33m[m devfreq_boost: Clean up code style and update license header [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m3ccbe19[m -[33m[m Defconfig: Configure devfreq boost driver [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mf3d3fdc[m -[33m[m msm: mdss: Boost cpubw devfreq device when a new frame is ready [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m44c54e5[m -[33m[m devfreq: Introduce devfreq boost driver [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m55d9c6c[m -[33m[m sched: walt: Update cpufreq on window rollover [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m338fff6[m -[33m[m msm: camera: Fix use-after-free in msm_ois_i2c_probe() [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m783692d[m -[33m[m msm_cci: fix inconsistent mutex_lock [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m5b28ef7[m -[33m[m msm: mdss: fix inconsistent mutex_lock [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m2808e1a[m -[33m[m msm: mdss: fix inconsistent mutex_lock [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mff1a158[m -[33m[m msm: mdss: fix inconsistent mutex_lock [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mc086ede[m -[33m[m pwm: qpnp: Fix qcom HW known issue [32m(3 months ago)[m DennySPB
+* | | | | | | |   [31m2a424d5[m -[33m[m Merge tag 'LA.UM.7.5.r1-03700-8x96.0' [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m9a1523c[m -[33m[m Makefile: update opt flags [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mdc9eca3[m -[33m[m sched/topology: Fix building of overlapping sched-groups [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mf4707e1[m -[33m[m sched/fair, cpumask: Export for_each_cpu_wrap() [32m(3 months ago)[m DennySPB
+* | | | | | | | [31maa4744b[m -[33m[m sched/deadline: Don't re-initialize 'struct cpudl' [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mf526f7d[m -[33m[m ANDROID: update_group_capacity for single cpu in cluster [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m83392b0[m -[33m[m ANDROID: sched/fair: add idle state filter to prefer_idle case [32m(3 months ago)[m DennySPB
+* | | | | | | | [31ma1636a4[m -[33m[m ANDROID: sched/fair: remove order from CPU selection [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m3a1d415[m -[33m[m ANDROID: sched/fair: unify spare capacity calculation [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m19fe8e4[m -[33m[m BACKPORT: sched/fair: remove sync logic from select_energy_cpu_brute [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m369cf5d[m -[33m[m qcacld-2.0: fix build error with polly [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mbbe6a8f[m -[33m[m qcom-cpufreq: Boost all online CPUs when exiting suspend [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m050f304[m -[33m[m UPSTREAM: block: silently forbid sending any ioctl to a partition [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mce83c30[m -[33m[m drivers: cpuidle: lpm-levels: Correctly check for list empty [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m693af17[m -[33m[m BACKPORT: drivers: cpuidle: lpm-levels: Fix KW issues with idle state idx < 0 [32m(3 months ago)[m DennySPB
+* | | | | | | | [31ma1bd6dd[m -[33m[m qcacld-2.0: Fix compile errors when -finline-functions is used [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m455b41c[m -[33m[m treewide: Fix compile errors when -O2 is used [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mec0bb28[m -[33m[m drivers: fix a few more warnings [32m(3 months ago)[m DennySPB
+* | | | | | | | [31madf4454[m -[33m[m msm: mdss: rotator: Fix uninitialized variable warning [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mbc9eb49[m -[33m[m drivers: platform: msm: mhi: mhi_bhi: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m98a9e778[m -[33m[m usb: gadget: function: u_ether: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m06e31e8[m -[33m[m soc: qcom: ipc_router_mhi_xprt: Initialize variable at start [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m12108c9[m -[33m[m drivers: power: qpnp-fg: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31md246a57[m -[33m[m net: rmnet_data: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m9cb8c9c[m -[33m[m sound: soc: msm: qdsp6v2: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m56fd5e0[m -[33m[m msm: mhi: initialize variables to default values [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m5029149[m -[33m[m block: Unhash block device inodes on gendisk destruction [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m7f45f51[m -[33m[m arm: dts: msm8996-v3: restore original initial pwrlevel-s [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m5e7b9e8[m -[33m[m BACKPORT: qpnp-fg: Limit how frequently fg data can be queried [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mce79495[m -[33m[m sched/fair: Fix incorrect usage of RCU in CPU select path [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mdb469d3[m -[33m[m Defconfig: Disable BCL driver [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mdaf720d[m -[33m[m BACKPORT: cpufreq: Return 0 from ->fast_switch() on errors [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m8340560[m -[33m[m sched/loadavg: Use {READ,WRITE}_ONCE() for sample window [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m0195af9[m -[33m[m Revert "Revert "kernel: Boost all CPUs to the max when userspace launches an app"" [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mcd5dd43[m -[33m[m scpt: fix struct_size [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m77f35f4[m -[33m[m defconfig: update inline with CAF perf config from LA.UM.7.6.r1-03600-89xx.0 [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m3184b8a[m -[33m[m power: qpnp-fg: make CHARGE_FULL property writable by user [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m323f0dd[m -[33m[m power: qpnp-fg: expose bucket cycle count bins as device attribute [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m1589930[m -[33m[m defconfig: enable CPU_BOOST [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m68ace26[m -[33m[m cpuboost: fix kthread usage [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m4ce7774[m -[33m[m Revert "kthread: remove queuing_blocked() from kthread.h" [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m1f1ff7c[m -[33m[m ANDROID: sdcardfs: Add option to not link obb [32m(3 months ago)[m DennySPB
+* | | | | | | | [31ma0c68e9[m -[33m[m ANDROID: sdcardfs: Add sandbox [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m93a8e57[m -[33m[m Revert "msm: kgsl: Replace scm call api with its atomic version" [32m(3 months ago)[m DennySPB
+* | | | | | | |   [31m3b4c044[m -[33m[m Merge tag 'LA.UM.7.6.r1-03600-89xx.0' [32m(3 months ago)[m DennySPB
+* [31m25e0289[m -[33m[m Merge branch 'upstream-linux-3.18.y' [32m(3 months ago)[m DennySPB
+* [31m5dd13f3[m -[33m[m msm_perf: disable touchboost by default [32m(4 months ago)[m DennySPB
+* [31mebc072a[m -[33m[m Revert "kernel: Boost all CPUs to the max when userspace launches an app" [32m(4 months ago)[m DennySPB
+* [31mb9fca17[m -[33m[m Revert "cpufreq: Kill userspace CPU boosting entirely" [32m(4 months ago)[m DennySPB
+* [31m97cc859[m -[33m[m Defconfig: enable MSM_PERFORMANCE and MSM_PERFORMANCE_CPUFREQ_LIMITS_VOTING_ONLY [32m(4 months ago)[m DennySPB
+* [31m9e782d0[m -[33m[m Merge branch 'upstream-linux-3.18.y' [32m(4 months ago)[m DennySPB
+* [31md0f429c[m -[33m[m sched/fair: prefer energy efficient CPUs for !prefer_idle tasks [32m(4 months ago)[m DennySPB
+* [31mcbd1585[m -[33m[m sched/fair: Remove idle state estimation [32m(4 months ago)[m DennySPB
+* [31m1a7593e[m -[33m[m sched/fair: Optimize energy calculation with cached energy [32m(4 months ago)[m DennySPB
+* [31m4cc3b9d[m -[33m[m sched/fair: Optimize energy computation with task oriented [32m(4 months ago)[m DennySPB
+* [31mdd2c7f4[m -[33m[m sched/fair: Refactor compute_energy() [32m(4 months ago)[m DennySPB
+* [31m540a220[m -[33m[m sched/fair: Estimate capacity index ahead energy computation [32m(4 months ago)[m DennySPB
+* [31m174b250[m -[33m[m sched/fair: Use eenv::sg_cap to select capacity index [32m(4 months ago)[m DennySPB
+* [31ma43a71e[m -[33m[m sched/fair: Decide 'eenv->sg_cap' ahead energy computation [32m(4 months ago)[m DennySPB
+* [31mb9c9fd4[m -[33m[m sched/fair: Introduce new function compute_task_energy() [32m(4 months ago)[m DennySPB
+* [31m2d3563b[m -[33m[m sched/fair: Lift CPU iteration out of calc_sg_energy() [32m(4 months ago)[m DennySPB
+* [31m89763dd[m -[33m[m sched/fair: Use cpumask to track candidates for energy [32m(4 months ago)[m DennySPB
+* [31m9140f95[m -[33m[m sched/fair: Use per cpu data to maintain energy environment [32m(4 months ago)[m DennySPB
+* [31mf2601cb[m -[33m[m sched/fair: Reduce indent in select_energy_cpu_brute() [32m(4 months ago)[m DennySPB
+* [31m5413c07[m -[33m[m sched/fair: Re-define return values for select_energy_cpu_idx() [32m(4 months ago)[m DennySPB
+* [31mba42fe3[m -[33m[m sched/fair: Prepare energy env cpumask before energy calculation [32m(4 months ago)[m DennySPB
+* [31m1fa4014[m -[33m[m ARM: dts: msm: Set default GPU freq to 133MHz on msm8996 and msm8996pro [32m(4 months ago)[m DennySPB
+* [31m6d5c8a7[m -[33m[m drivers: qcacld-2.0: Fix compilation with WLAN_THERMAL_SHUTDOWN disabled [32m(4 months ago)[m DennySPB
+*   [31md552f62[m -[33m[m Merge tag 'LA.UM.7.6.r1-03400-89xx.0' of of https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qcacld-2.0 [32m(4 months ago)[m DennySPB
+* [31m55a86c2[m -[33m[m Merge branch 'upstream-linux-3.18.y' [32m(4 months ago)[m DennySPB
+* [31m04d8169[m -[33m[m msm: kgsl: create sysfs entries to expose memory usage [32m(4 months ago)[m DennySPB
+* [31m121eb1b[m -[33m[m ARM: dts: msm: update dload type imem offset for MSM8917/37/53/96 [32m(4 months ago)[m DennySPB
+* [31m48520bf[m -[33m[m binder: fix proc->files use-after-free [32m(4 months ago)[m DennySPB
+* [31me2b3b3e[m -[33m[m UPSTREAM: Revert "FROMLIST: binder: fix proc->files use-after-free" [32m(4 months ago)[m DennySPB
+* [31mf8d2551[m -[33m[m msm: ipa: Protect ipa default routing table [32m(4 months ago)[m DennySPB
+* [31m786b50b[m -[33m[m i2c-msm-v2: Handle Null pointer de-reference [32m(4 months ago)[m DennySPB
+* [31m06f19d7[m -[33m[m CHROMIUM: bluetooth: fix a regression about power off delay [32m(4 months ago)[m DennySPB
+* [31m29bcda8[m -[33m[m ANDROID: sdcardfs: Add option to drop unused dentries [32m(4 months ago)[m DennySPB
+* [31m8d35907[m -[33m[m fs: sdfat: Add MODULE_ALIAS_FS for supported filesystems [32m(4 months ago)[m DennySPB
+* [31m3bb788d[m -[33m[m fs: sdfat: Add config option to register sdFAT for VFAT [32m(4 months ago)[m DennySPB
+* [31m9136149[m -[33m[m fs: sdfat: Add config option to register sdFAT for exFAT [32m(4 months ago)[m DennySPB
+*   [31m9a31f48[m -[33m (s/9.0)[m Merge branch 'kernel.lnx.3.18.r34-rel' of https://github.com/android-linux-stable/msm-3.18 [32m(12 days ago)[m ВDennySPB
+* | | | | | | | [31me0123ae[m -[33m[m arm64: Provide atomic_{or,xor,and} [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m505bd27[m -[33m[m cpu_input_boost: Eliminate spin lock by using atomic cmpxchg loop [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m4ebc2e1[m -[33m[m cpu_input_boost: Destroy workqueue on error path in init [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mffe0370[m -[33m[m cpu_input_boost: Simplify bitwise operations used to store boost state [32m(3 months ago)[m DennySPB
+* | | | | | | | [31me9d7f60[m -[33m[m kernel: Boost CPU to the max when launcher3 becomes a top app [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m8b154ef[m -[33m[m msm: kgsl: Correctly limit max number of contexts per process [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m12ef384[m -[33m[m Revert "Defconfig: enable MSM_PERFORMANCE and MSM_PERFORMANCE_CPUFREQ_LIMITS_VOTING_ONLY" [32m(3 months ago)[m DennySPB
+* | | | | | | | [31me251c4d[m -[33m[m Merge branch 'upstream-linux-3.18.y' [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m422c7c9[m -[33m[m defconfig: switch back to cpu_input_boost [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m032d160[m -[33m[m dsp: send spkr prot calibration after default acdb. [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m24705d13[m -[33m[m BACKPORT: sched/fair: Use util_est in LB and WU paths [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m6bd9566[m -[33m[m BACKPORT: sched/fair: Add util_est on top of PELT [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m7173403[m -[33m[m sched: energy: handle memory allocation failure [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m0b53076[m -[33m[m BACKPORT: sched/cpufreq/schedutil: Use util_est for OPP selection [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m28c80af[m -[33m[m cpu_input_boost: make wq unbound [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m52e1e08[m -[33m[m cpu_input_boost: avoid boosting big cluster when load is low [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mf76d7fe[m -[33m[m devfreq_boost: Clean up code style and update license header [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m3ccbe19[m -[33m[m Defconfig: Configure devfreq boost driver [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mf3d3fdc[m -[33m[m msm: mdss: Boost cpubw devfreq device when a new frame is ready [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m44c54e5[m -[33m[m devfreq: Introduce devfreq boost driver [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m55d9c6c[m -[33m[m sched: walt: Update cpufreq on window rollover [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m338fff6[m -[33m[m msm: camera: Fix use-after-free in msm_ois_i2c_probe() [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m783692d[m -[33m[m msm_cci: fix inconsistent mutex_lock [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m5b28ef7[m -[33m[m msm: mdss: fix inconsistent mutex_lock [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m2808e1a[m -[33m[m msm: mdss: fix inconsistent mutex_lock [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mff1a158[m -[33m[m msm: mdss: fix inconsistent mutex_lock [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mc086ede[m -[33m[m pwm: qpnp: Fix qcom HW known issue [32m(3 months ago)[m DennySPB
+* | | | | | | |   [31m2a424d5[m -[33m[m Merge tag 'LA.UM.7.5.r1-03700-8x96.0' [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m9a1523c[m -[33m[m Makefile: update opt flags [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mdc9eca3[m -[33m[m sched/topology: Fix building of overlapping sched-groups [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mf4707e1[m -[33m[m sched/fair, cpumask: Export for_each_cpu_wrap() [32m(3 months ago)[m DennySPB
+* | | | | | | | [31maa4744b[m -[33m[m sched/deadline: Don't re-initialize 'struct cpudl' [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mf526f7d[m -[33m[m ANDROID: update_group_capacity for single cpu in cluster [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m83392b0[m -[33m[m ANDROID: sched/fair: add idle state filter to prefer_idle case [32m(3 months ago)[m DennySPB
+* | | | | | | | [31ma1636a4[m -[33m[m ANDROID: sched/fair: remove order from CPU selection [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m3a1d415[m -[33m[m ANDROID: sched/fair: unify spare capacity calculation [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m19fe8e4[m -[33m[m BACKPORT: sched/fair: remove sync logic from select_energy_cpu_brute [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m369cf5d[m -[33m[m qcacld-2.0: fix build error with polly [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mbbe6a8f[m -[33m[m qcom-cpufreq: Boost all online CPUs when exiting suspend [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m050f304[m -[33m[m UPSTREAM: block: silently forbid sending any ioctl to a partition [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mce83c30[m -[33m[m drivers: cpuidle: lpm-levels: Correctly check for list empty [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m693af17[m -[33m[m BACKPORT: drivers: cpuidle: lpm-levels: Fix KW issues with idle state idx < 0 [32m(3 months ago)[m DennySPB
+* | | | | | | | [31ma1bd6dd[m -[33m[m qcacld-2.0: Fix compile errors when -finline-functions is used [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m455b41c[m -[33m[m treewide: Fix compile errors when -O2 is used [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mec0bb28[m -[33m[m drivers: fix a few more warnings [32m(3 months ago)[m DennySPB
+* | | | | | | | [31madf4454[m -[33m[m msm: mdss: rotator: Fix uninitialized variable warning [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mbc9eb49[m -[33m[m drivers: platform: msm: mhi: mhi_bhi: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m98a9e778[m -[33m[m usb: gadget: function: u_ether: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m06e31e8[m -[33m[m soc: qcom: ipc_router_mhi_xprt: Initialize variable at start [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m12108c9[m -[33m[m drivers: power: qpnp-fg: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31md246a57[m -[33m[m net: rmnet_data: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m9cb8c9c[m -[33m[m sound: soc: msm: qdsp6v2: fix uninitilized variable [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m56fd5e0[m -[33m[m msm: mhi: initialize variables to default values [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m5029149[m -[33m[m block: Unhash block device inodes on gendisk destruction [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m7f45f51[m -[33m[m arm: dts: msm8996-v3: restore original initial pwrlevel-s [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m5e7b9e8[m -[33m[m BACKPORT: qpnp-fg: Limit how frequently fg data can be queried [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mce79495[m -[33m[m sched/fair: Fix incorrect usage of RCU in CPU select path [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mdb469d3[m -[33m[m Defconfig: Disable BCL driver [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mdaf720d[m -[33m[m BACKPORT: cpufreq: Return 0 from ->fast_switch() on errors [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m8340560[m -[33m[m sched/loadavg: Use {READ,WRITE}_ONCE() for sample window [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m0195af9[m -[33m[m Revert "Revert "kernel: Boost all CPUs to the max when userspace launches an app"" [32m(3 months ago)[m DennySPB
+* | | | | | | | [31mcd5dd43[m -[33m[m scpt: fix struct_size [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m77f35f4[m -[33m[m defconfig: update inline with CAF perf config from LA.UM.7.6.r1-03600-89xx.0 [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m3184b8a[m -[33m[m power: qpnp-fg: make CHARGE_FULL property writable by user [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m323f0dd[m -[33m[m power: qpnp-fg: expose bucket cycle count bins as device attribute [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m1589930[m -[33m[m defconfig: enable CPU_BOOST [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m68ace26[m -[33m[m cpuboost: fix kthread usage [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m4ce7774[m -[33m[m Revert "kthread: remove queuing_blocked() from kthread.h" [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m1f1ff7c[m -[33m[m ANDROID: sdcardfs: Add option to not link obb [32m(3 months ago)[m DennySPB
+* | | | | | | | [31ma0c68e9[m -[33m[m ANDROID: sdcardfs: Add sandbox [32m(3 months ago)[m DennySPB
+* | | | | | | | [31m93a8e57[m -[33m[m Revert "msm: kgsl: Replace scm call api with its atomic version" [32m(3 months ago)[m DennySPB
+* | | | | | | |   [31m3b4c044[m -[33m[m Merge tag 'LA.UM.7.6.r1-03600-89xx.0' [32m(3 months ago)[m DennySPB
+* [31m25e0289[m -[33m[m Merge branch 'upstream-linux-3.18.y' [32m(3 months ago)[m DennySPB
+* [31m5dd13f3[m -[33m[m msm_perf: disable touchboost by default [32m(4 months ago)[m DennySPB
+* [31mebc072a[m -[33m[m Revert "kernel: Boost all CPUs to the max when userspace launches an app" [32m(4 months ago)[m DennySPB
+* [31mb9fca17[m -[33m[m Revert "cpufreq: Kill userspace CPU boosting entirely" [32m(4 months ago)[m DennySPB
+* [31m97cc859[m -[33m[m Defconfig: enable MSM_PERFORMANCE and MSM_PERFORMANCE_CPUFREQ_LIMITS_VOTING_ONLY [32m(4 months ago)[m DennySPB
+* [31m9e782d0[m -[33m[m Merge branch 'upstream-linux-3.18.y' [32m(4 months ago)[m DennySPB
+* [31md0f429c[m -[33m[m sched/fair: prefer energy efficient CPUs for !prefer_idle tasks [32m(4 months ago)[m DennySPB
+* [31mcbd1585[m -[33m[m sched/fair: Remove idle state estimation [32m(4 months ago)[m DennySPB
+* [31m1a7593e[m -[33m[m sched/fair: Optimize energy calculation with cached energy [32m(4 months ago)[m DennySPB
+* [31m4cc3b9d[m -[33m[m sched/fair: Optimize energy computation with task oriented [32m(4 months ago)[m DennySPB
+* [31mdd2c7f4[m -[33m[m sched/fair: Refactor compute_energy() [32m(4 months ago)[m DennySPB
+* [31m540a220[m -[33m[m sched/fair: Estimate capacity index ahead energy computation [32m(4 months ago)[m DennySPB
+* [31m174b250[m -[33m[m sched/fair: Use eenv::sg_cap to select capacity index [32m(4 months ago)[m DennySPB
+* [31ma43a71e[m -[33m[m sched/fair: Decide 'eenv->sg_cap' ahead energy computation [32m(4 months ago)[m DennySPB
+* [31mb9c9fd4[m -[33m[m sched/fair: Introduce new function compute_task_energy() [32m(4 months ago)[m DennySPB
+* [31m2d3563b[m -[33m[m sched/fair: Lift CPU iteration out of calc_sg_energy() [32m(4 months ago)[m DennySPB
+* [31m89763dd[m -[33m[m sched/fair: Use cpumask to track candidates for energy [32m(4 months ago)[m DennySPB
+* [31m9140f95[m -[33m[m sched/fair: Use per cpu data to maintain energy environment [32m(4 months ago)[m DennySPB
+* [31mf2601cb[m -[33m[m sched/fair: Reduce indent in select_energy_cpu_brute() [32m(4 months ago)[m DennySPB
+* [31m5413c07[m -[33m[m sched/fair: Re-define return values for select_energy_cpu_idx() [32m(4 months ago)[m DennySPB
+* [31mba42fe3[m -[33m[m sched/fair: Prepare energy env cpumask before energy calculation [32m(4 months ago)[m DennySPB
+* [31m1fa4014[m -[33m[m ARM: dts: msm: Set default GPU freq to 133MHz on msm8996 and msm8996pro [32m(4 months ago)[m DennySPB
+* [31m6d5c8a7[m -[33m[m drivers: qcacld-2.0: Fix compilation with WLAN_THERMAL_SHUTDOWN disabled [32m(4 months ago)[m DennySPB
+*   [31md552f62[m -[33m[m Merge tag 'LA.UM.7.6.r1-03400-89xx.0' of of https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qcacld-2.0 [32m(4 months ago)[m DennySPB
+* [31m55a86c2[m -[33m[m Merge branch 'upstream-linux-3.18.y' [32m(4 months ago)[m DennySPB
+* [31m04d8169[m -[33m[m msm: kgsl: create sysfs entries to expose memory usage [32m(4 months ago)[m DennySPB
+* [31m121eb1b[m -[33m[m ARM: dts: msm: update dload type imem offset for MSM8917/37/53/96 [32m(4 months ago)[m DennySPB
+* [31m48520bf[m -[33m[m binder: fix proc->files use-after-free [32m(4 months ago)[m DennySPB
+* [31me2b3b3e[m -[33m[m UPSTREAM: Revert "FROMLIST: binder: fix proc->files use-after-free" [32m(4 months ago)[m DennySPB
+* [31mf8d2551[m -[33m[m msm: ipa: Protect ipa default routing table [32m(4 months ago)[m DennySPB
+* [31m786b50b[m -[33m[m i2c-msm-v2: Handle Null pointer de-reference [32m(4 months ago)[m DennySPB
+* [31m06f19d7[m -[33m[m CHROMIUM: bluetooth: fix a regression about power off delay [32m(4 months ago)[m DennySPB
+* [31m29bcda8[m -[33m[m ANDROID: sdcardfs: Add option to drop unused dentries [32m(4 months ago)[m DennySPB
+* [31m8d35907[m -[33m[m fs: sdfat: Add MODULE_ALIAS_FS for supported filesystems [32m(4 months ago)[m DennySPB
+* [31m3bb788d[m -[33m[m fs: sdfat: Add config option to register sdFAT for VFAT [32m(4 months ago)[m DennySPB
+* [31m9136149[m -[33m[m fs: sdfat: Add config option to register sdFAT for exFAT [32m(4 months ago)[m DennySPB
