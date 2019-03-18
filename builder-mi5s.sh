@@ -44,7 +44,7 @@ export USE_CCACHE=1
 export CCACHE_DIR=$CCACHEDIR/.ccache
 
 make clean && make mrproper
-make O=out -C $KERNEL_DIR capriszar_defconfig
+make O=out -C $KERNEL_DIR capricorn_defconfig
 
 make O=out -C $KERNEL_DIR  -j$( nproc --all ) ARCH=arm64 CROSS_COMPILE=aarch64-xnombre-linux-android CROSS_COMPILE_ARM32=arm-linux-androideabi-
 
