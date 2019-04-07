@@ -11,8 +11,8 @@ TOOLGC=/pipeline/build/root/toolchain/gclang/clang-r353983b/
 DATE=$(date +"%d%m%Y")
 KERNEL_NAME="syberia"
 DEVICE="-capricorn-"
-VER="0.1"
-TYPE="EAS-rebase-"
+VER="0.2"
+TYPE="-EAS-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
