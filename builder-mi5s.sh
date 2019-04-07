@@ -17,7 +17,7 @@ FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
 rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
-export PATH="/pipeline/build/root/toolchain/dtc/bin:${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin:${PATH}"
+export PATH="${TOOLGC}/bin:${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin:${PATH}"
  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/aarch64-linux-android/lib"
 #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/aarch64-linux-android/lib64"
