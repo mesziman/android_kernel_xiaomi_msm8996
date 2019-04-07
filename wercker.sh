@@ -12,7 +12,5 @@ git clone --depth=1 -b 6.0.9 https://github.com/nvertigo/llvm-Snapdragon_LLVM_fo
 git clone --depth=2 -b 9.0 https://github.com/syberia-project/platform_prebuilts_build-tools /pipeline/build/root/toolchain/asd
 git clone --depth=1 https://bitbucket.org/xanaxdroid/dragontc-9.0.git /pipeline/build/root/toolchain/dtc
 git clone --depth=1 https://bitbucket.org/jonascardoso/toolchain_aarch64_travis.git /pipeline/build/root/toolchain/jonas
-git clone --depth=1 https://github.com/Z3Prover/z3.git ~/z3 && cd ~/z3 && python scripts/mk_make.py && cd build && make && make install
-ln -s /usr/lib/libz3.so /usr/lib/libz3.so.4.8
 cd $LOFASZ
 bash builder-mi5s.sh
