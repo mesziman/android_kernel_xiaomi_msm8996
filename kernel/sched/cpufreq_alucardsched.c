@@ -887,7 +887,7 @@ static void acgov_kthread_stop(struct acgov_policy *sg_policy)
 	if (sg_policy->policy->fast_switch_enabled)
 		return;
 
-	flush_kthread_worker(&sg_policy->worker);
+	kthread_flush_worker(&sg_policy->worker);
 	kthread_stop(sg_policy->thread);
 }
 
