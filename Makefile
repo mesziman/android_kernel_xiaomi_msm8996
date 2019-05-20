@@ -414,7 +414,8 @@ KBUILD_CFLAGS := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		-fno-strict-aliasing -fno-common -fshort-wchar \
 		-Werror-implicit-function-declaration \
 		-Wno-format-security \
-		-std=gnu89 $(call cc-option,-fno-PIE) $(OPT_FLAGS) $(POLLY_FLAGS)
+		-mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 \
+		-std=gnu89 $(call cc-option,-fno-PIE) $(GCC9WARNINGS)
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
