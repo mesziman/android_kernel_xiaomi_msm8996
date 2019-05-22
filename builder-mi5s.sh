@@ -15,8 +15,8 @@ FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
 rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
 export PATH="${TOOLCHAINDIR}/bin:${TOOLCHAIN32}/bin:${PATH}"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAINDIR}/lib"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${TOOLCHAIN32}/lib"
+export LD_LIBRARY_PATH="${TOOLCHAINDIR}/lib/gcc/aarch64-elf/9.1.0:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="${TOOLCHAIN32}/lib/gcc/arm-eabi/9.1.0:$LD_LIBRARY_PATH"
 export ARCH=arm64
 export KBUILD_BUILD_USER="mesziman"
 export KBUILD_BUILD_HOST="github"
