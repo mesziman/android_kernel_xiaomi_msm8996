@@ -347,19 +347,15 @@ static int32_t afe_callback(struct apr_client_data *data, void *priv)
 		if (sp_make_afe_callback(data->payload, data->payload_size))
 			return -EINVAL;
 
-<<<<<<< HEAD
-		wake_up(&this_afe.wait[data->token]);
+		if (afe_token_is_valid(data->token))
+			wake_up(&this_afe.wait[data->token]);
+		else
+			return -EINVAL;
 	} else if (data->opcode == ULTRASOUND_OPCODE) {
 		if (data->payload != NULL)
 			process_us_payload(data->payload);
 		else
 			pr_err("%s: payload == NULL !\n", __func__);
-=======
-		if (afe_token_is_valid(data->token))
-			wake_up(&this_afe.wait[data->token]);
-		else
-			return -EINVAL;
->>>>>>> 27efddbb6c8efc97f1e8be1b51165f34a2a5cacd
 	} else if (data->payload_size) {
 		uint32_t *payload;
 		uint16_t port_id = 0;
