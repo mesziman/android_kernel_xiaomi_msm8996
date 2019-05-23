@@ -10,7 +10,6 @@ KERNEL_NAME="syberia"
 DEVICE="-capricorn-rebase-"
 VER="-GCC9"
 TYPE="-EAS"
->>>>>>> efdddbc... compile with GCC9.1
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
