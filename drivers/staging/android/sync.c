@@ -637,15 +637,10 @@ EXPORT_SYMBOL(sync_fence_wait);
 
 static void sync_fence_free(struct kref *kref)
 {
-	struct sync_fence *fence = container_of(kref, struct sync_fence, kref);
-	int i;
+  struct sync_fence *fence = container_of(kref, struct sync_fence, kref);
 
-	for (i = 0; i < fence->num_fences; ++i) {
-		fence_remove_callback(fence->cbs[i].sync_pt, &fence->cbs[i].cb);
-		fence_put(fence->cbs[i].sync_pt);
-	}
-
-	kfree(fence);
+  sync_fence_free_pts(fence);
+  kfree(fence);
 }
 
 static int sync_fence_release(struct inode *inode, struct file *file)
