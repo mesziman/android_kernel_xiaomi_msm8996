@@ -58,7 +58,7 @@ chmod 755 $bb;
 $bb chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 
 ui_print "===========================================";
-ui_print "======= S Y B E R I A  K E R N E L ========";
+ui_print "=======   LINEAGEOS   K E R N E L  ========";
 ui_print "===========================================";
 ui_print " ";
 sleep 1;

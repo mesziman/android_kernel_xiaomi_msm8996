@@ -6,11 +6,11 @@ CCACHEDIR=../CCACHE/capricorn
 TOOLCHAINDIR=/pipeline/build/root/toolchain/supergcc
 TOOLCHAIN32=/pipeline/build/root/toolchain/supergcc32
 DATE=$(date +"%d%m%Y")
-KERNEL_NAME="syberia"
-DEVICE="-capricorn-"
-VER="-GCC9"
-TYPE="-EAS-"
-FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
+KERNEL_NAME="LOS"
+DEVICE="-capricorn"
+TYPE="-HMP"
+VER="-GCC9-"
+FINAL_ZIP="$KERNEL_NAME""$DEVICE""$TYPE""$VER""$DATE".zip
 
 rm $ANYKERNEL_DIR/capricorn/Image.gz-dtb
 rm $KERNEL_DIR/arch/arm64/boot/Image.gz $KERNEL_DIR/arch/arm64/boot/Image.gz-dtb
