@@ -37,7 +37,7 @@ echo "ccname noshell build : $(${CC} -v 2>&1 | grep -q "clang version" && echo c
 echo "===================WHICH========================="
 
 make clean && make mrproper
-make O=out -C $KERNEL_DIR capriszar_defconfig
+make O=out -C $KERNEL_DIR capricorn_defconfig
 
 make O=out -C $KERNEL_DIR  -j$( nproc --all ) ARCH=arm64 CROSS_COMPILE=aarch64-elf- CROSS_COMPILE_ARM32=arm-eabi-
 
