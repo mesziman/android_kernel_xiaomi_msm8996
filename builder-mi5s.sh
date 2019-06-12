@@ -6,9 +6,9 @@ CCACHEDIR=../CCACHE/capricorn
 TOOLCHAINDIR=/pipeline/build/root/toolchain/supergcc
 TOOLCHAIN32=/pipeline/build/root/toolchain/supergcc32
 DATE=$(date +"%d%m%Y")
-KERNEL_NAME="LOS"
+KERNEL_NAME="Darkness-rebase"
 DEVICE="-capricorn"
-TYPE="-HMP"
+TYPE="-EAS"
 VER="-GCC9-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$TYPE""$VER""$DATE".zip
 
