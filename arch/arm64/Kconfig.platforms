@@ -123,6 +123,12 @@ config MACH_XIAOMI_A1
 	help
 	  Build for Xiaomi Mi 5 (gemini)
 
+config MACH_XIAOMI_A7
+	bool "A7 board"
+	help
+	  Build for Xiaomi Mi 5S capricorn
+
+
 endchoice
 
 config ARCH_ROCKCHIP
